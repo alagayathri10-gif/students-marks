@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Result Calculator</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: Arial, sans-serif;
+
+        /* Background Image */
+        background: url("https://images.unsplash.com/photo-1588072432836-e10032774350") no-repeat center center/cover;
+    }
+
+    .card {
+        width: 340px;
+        padding: 25px;
+        border-radius: 15px;
+        background: rgba(0, 0, 0, 0.6); /* transparent overlay */
+        color: white;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+
+    h2 {
+        margin-bottom: 15px;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 12px;
+        border: none;
+        border-radius: 8px;
+        background: #00c9a7;
+        color: white;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #00a88a;
+    }
+
+    #result {
+        margin-top: 15px;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Student Result</h2>
+
+    <input type="number" id="sub1" placeholder="Subject 1 Marks">
+    <input type="number" id="sub2" placeholder="Subject 2 Marks">
+    <input type="number" id="sub3" placeholder="Subject 3 Marks">
+    <input type="number" id="sub4" placeholder="Subject 4 Marks">
+    <input type="number" id="sub5" placeholder="Subject 5 Marks">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function calculate() {
+    let total = 0;
+    let fail = false;
+
+    for (let i = 1; i <= 5; i++) {
+        let val = document.getElementById("sub" + i).value.trim();
+
+        if (val === "") {
+            alert("Enter all marks");
+            return;
+        }
+
+        let mark = Number(val);
+
+        if (isNaN(mark) || mark < 0 || mark > 100) {
+            alert("Marks must be 0-100");
+            return;
+        }
+
+        if (mark < 35) fail = true;
+
+        total += mark;
+    }
+
+    let percent = total / 5;
+    let grade = "";
+
+    if (fail) grade = "Fail";
+    else if (percent >= 90) grade = "A+";
+    else if (percent >= 75) grade = "A";
+    else if (percent >= 60) grade = "B";
+    else if (percent >= 50) grade = "C";
+    else grade = "Fail";
+
+    document.getElementById("result").innerHTML =
+        `Total: ${total}<br>
+         Percentage: ${percent.toFixed(2)}%<br>
+         Grade: ${grade}`;
+}
+</script>
+
+</body>
+</html>
